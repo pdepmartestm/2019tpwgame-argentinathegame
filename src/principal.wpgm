@@ -1,0 +1,8 @@
+import wollok.game.*
+import menus.*
+
+program argentinaTheGame
+{
+	menuPrincipal.menuInicial()
+		game.start()
+}
