@@ -20,7 +20,7 @@ object menuPrincipal
 	method menuSeleccionArena()
 	{
 		game.clear()
-		game.sound("audios/export (1).wav")
+		//game.sound("audios/export (1).wav") NO SE PUEDE SUBIR EL AUDIO PORQUE PESA MAS DE 25MB
 		game.addVisual(interfazArena)
 		keyboard.num(1).onPressDo{self.menuSeleccionPersonajes() arenaSeleccionada = casaRosada}
 		keyboard.num(2).onPressDo{self.menuSeleccionPersonajes() arenaSeleccionada = bombonera}
