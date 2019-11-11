@@ -7,6 +7,11 @@ class Visual
 	var property position = null
 }
 
+const maiori = new Visual(
+	image = "interfaces/MaioriCara.png",
+	position = game.at(20,8)
+)
+
 const interfazInicial = new Visual(
 	image = "interfaces/interfazInicial.png",
 	position = game.origin()
@@ -30,46 +35,6 @@ const indicadorTurno = new Visual(
 	image = "interfaces/indicadorDeTurno.png"
 )
 
-const qweCristina = new Visual(
-	image = "interfaces/qweCristina.png",
-	position = game.at(0,1)
-)
-const qweFort = new Visual(
-	image = "interfaces/qweFort.png",
-	position = game.at(0,1)
-)
-const qweMacri = new Visual(
-	image = "interfaces/qweMacri.png",
-	position = game.at(0,1)
-)
-const qweMaradona = new Visual(
-	image = "interfaces/qweMaradona.png",
-	position = game.at(0,1)
-)
-const qweMenem = new Visual(
-	image = "interfaces/qweMenem.png",
-	position = game.at(0,1)
-)
-const iopCristina = new Visual(
-	image = "interfaces/iopCristina.png",
-	position = game.at(14,1)
-)
-const iopFort = new Visual(
-	image = "interfaces/iopFort.png",
-	position = game.at(14,1)
-)
-const iopMacri = new Visual(
-	image = "interfaces/iopMacri.png",
-	position = game.at(12,1)
-)
-const iopMaradona = new Visual(
-	image = "interfaces/iopMaradona.png",
-	position = game.at(14,1)
-)
-const iopMenem = new Visual(
-	image = "interfaces/iopMenem.png",
-	position = game.at(14,1)
-)
 const casaRosada = new Visual(
 	image = "arenas/casaRosada.jpg",
 	position = game.at(0,5)
@@ -83,41 +48,49 @@ const bombonera = new Visual(
 	position = game.at(0,5)
 )
 
-class Barra inherits Visual
+class BarraIzq inherits Visual
 {
 	var property direccionImagen
 	method actualizar(variable)
 	{
 		game.removeVisual(self)
 		image = direccionImagen + variable + ".png"
-		if(self == vidaDer)
-			position = game.at(14+(100-variable)/10, 14)
-		else if(self == energiaDer)
-			position = game.at(14+(100-variable)/10, 13)
 		game.addVisual(self)
 	}
 }
 
-const vidaIzq = new Barra(
+class BarraDer inherits BarraIzq
+{
+	const posY
+	override method actualizar(variable)
+	{
+		super(variable)
+		position = game.at(14+(100-variable)/10, posY)
+	}
+}
+
+const vidaIzq = new BarraIzq(
 	image = "interfaces/vida100.png",
 	position = game.at(1,14),
 	direccionImagen = "interfaces/vida"
 )
 
-const energiaIzq = new Barra(
+const energiaIzq = new BarraIzq(
 	image = "interfaces/energia100.png",
 	position = game.at(1,13),
 	direccionImagen = "interfaces/energia"
 )
 
-const vidaDer = new Barra(
+const vidaDer = new BarraDer(
 	image = "interfaces/vida100.png",
+	posY = 14,
 	position = game.at(14,14),
 	direccionImagen = "interfaces/vida"
 )
 
-const energiaDer = new Barra(
+const energiaDer = new BarraDer(
 	image = "interfaces/energia100.png",
+	posY = 13,
 	position = game.at(14,13),
 	direccionImagen = "interfaces/energia"
 )

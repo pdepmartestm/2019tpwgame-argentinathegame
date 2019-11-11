@@ -30,6 +30,7 @@ object menuPrincipal
 	{
 		game.clear()
 		game.addVisual(interfazSeleccion)
+		game.addVisual(maiori)	
 		keyboard.num(1).onPressDo{self.seleccionar(mauricioMacri)}
 		keyboard.num(2).onPressDo{self.seleccionar(carlosMenem)}
 		keyboard.num(3).onPressDo{self.seleccionar(cristinaKirchner)}
@@ -42,34 +43,26 @@ object menuPrincipal
 		if(personaje1 == null) 
 		{
 			personaje1 = personaje
+			game.say(maiori,"Elegiste a " + personaje.nombre())
 			personaje.barraVida(vidaIzq)
 			personaje.barraEnergia(energiaIzq)
-			personaje.ataqueDebil().inicioX(2)
-			personaje.ataqueDebil().finalX(21)
-			personaje.ataqueFuerte().inicioX(2)
-			personaje.ataqueFuerte().finalX(21)
-			personaje.ataqueDebil().position(game.at(2,6))
-			personaje.ataqueFuerte().position(game.at(2,personaje.ataqueFuerte().posY()))
+			personaje.ataqueDebil().setearPosicion(personaje1)
+			personaje.ataqueFuerte().setearPosicion(personaje1)
 		}
 		else if(personaje1 == personaje)
-			throw new Exception(message = "No podes elegir el mismo personaje")
+			game.say(maiori,"No podes elegir el mismo personaje")
 		else
 		{
 			personaje2 = personaje 
+			game.say(maiori,"Elegiste a " + personaje.nombre())
 			personaje.barraVida(vidaDer)
 			personaje.barraEnergia(energiaDer)
-			personaje.ataqueDebil().inicioX(21)
-			personaje.ataqueDebil().finalX(2)
-			personaje.ataqueFuerte().inicioX(8)
-			personaje.ataqueFuerte().finalX(0)
-			personaje.ataqueDebil().position(game.at(21,6))
-			personaje.ataqueFuerte().position(game.at(8,personaje.ataqueFuerte().posY()))
+			personaje.ataqueDebil().setearPosicion(personaje2)
+			personaje.ataqueFuerte().setearPosicion(personaje2)
 			personaje.imagenBase(personaje.imagenBaseDer())
 			personaje.imagenGolpe(personaje.imagenGolpeDer())
 			personaje.image(personaje.imagenBaseDer())
-			if(personaje == mauricioMacri)
-				personaje.ataqueFuerte().image("ataques/macriFuerteDer.png")
-			arena.iniciarLucha()
+			game.schedule(200, { => arena.iniciarLucha()})
 		}
 	}
 }
@@ -102,39 +95,26 @@ object arena
 		self.turnoActual([personaje2, personaje1].anyOne())
 		indicadorTurno.position(turnoActual.posicionTurno())
 		game.addVisual(indicadorTurno)
-		keyboard.q().onPressDo{self.golpear(personaje1, personaje2, personaje1.ataqueDebil())}
-		keyboard.w().onPressDo{self.golpear(personaje1, personaje2, personaje1.ataqueFuerte())}
-		keyboard.e().onPressDo{self.golpear(personaje1, personaje2, personaje1.ataqueEnergia())}
-		keyboard.i().onPressDo{self.golpear(personaje2, personaje1, personaje2.ataqueDebil())}
-		keyboard.o().onPressDo{self.golpear(personaje2, personaje1, personaje2.ataqueFuerte())}
-		keyboard.p().onPressDo{self.golpear(personaje2, personaje1, personaje2.ataqueEnergia())}
+		keyboard.q().onPressDo{self.ordenarAtaque(personaje1, personaje2, personaje1.ataqueDebil())}
+		keyboard.w().onPressDo{self.ordenarAtaque(personaje1, personaje2, personaje1.ataqueFuerte())}
+		keyboard.e().onPressDo{self.ordenarAtaque(personaje1, personaje2, personaje1.ataqueEnergia())}
+		keyboard.i().onPressDo{self.ordenarAtaque(personaje2, personaje1, personaje2.ataqueDebil())}
+		keyboard.o().onPressDo{self.ordenarAtaque(personaje2, personaje1, personaje2.ataqueFuerte())}
+		keyboard.p().onPressDo{self.ordenarAtaque(personaje2, personaje1, personaje2.ataqueEnergia())}
 	}
 	
-	method golpear(personaje, rival, ataque)
+	method ordenarAtaque(personaje, rival, ataque)
 	{
 		if(turnoActual == personaje)
 		{
-			personaje.image(personaje.imagenGolpe())
-			var contador = 0
-			game.onTick(600, "tiempo imagen golpe", {
-				if(contador != 1)
-					contador += 1
-				else
-				{
-					personaje.image(personaje.imagenBase())
-					game.removeTickEvent("tiempo imagen golpe")
-				}
-			})
-			if(ataque == personaje.ataqueEnergia() || self.chequearEnergia(personaje, ataque))
-			{
-				ataque.usar(personaje, rival)
-				indicadorTurno.position(rival.posicionTurno())
-			}
-			else
-				game.say(personaje, "No tengo energia")
+			personaje.golpearCon(ataque,rival)
+			indicadorTurno.position(rival.posicionTurno())
 		}
 		else game.say(personaje, "No es mi turno")
 	}
 	
-	method chequearEnergia(personaje, ataque) = personaje.energia() >= ataque.gastoEnergia()
+	method cambiarTurno(aQuienLeToca){
+		turnoActual = aQuienLeToca
+		indicadorTurno.position(aQuienLeToca.posicionTurno())
+	}	
 }
