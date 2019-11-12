@@ -137,10 +137,9 @@ class AtaqueEnergia inherits Ataque
 	}
 }
 
-// Ataque fuerte de fort
 object fortFuerte inherits AtaqueEnergia(
 	image = "ataques/fortFuerte.png",
-	audio = "audios/Fort_cortaste_la_luz.mp3",
+	audio = "audios/Fort_cortaste_la_luz.mpeg",
 	danio = 40,
 	gastoEnergia = 70
 ){
@@ -162,6 +161,7 @@ object menemFuerte inherits AtaqueVertical(
 	override method usar(personaje, rival)
 	{
 		game.sound(audio)
+		position = game.at(inicioX, posYfinal)
 		game.addVisual(self)
 		game.onTick(100, "movimiento vertical arriba", {
 			if(position == game.at(inicioX, game.height()))
@@ -179,7 +179,7 @@ object menemFuerte inherits AtaqueVertical(
 						image = "ataques/menemFuerteArriba.png"
 					}
 					else
-						self.moverse(void)
+						self.moverse(inicioX)
 				})
 				game.removeTickEvent("movimiento vertical arriba")
 			}
@@ -200,8 +200,8 @@ object menemFuerte inherits AtaqueVertical(
 		}
 		else
 		{
-			inicioX = 21
-			finalX = 2
+			inicioX = 19
+			finalX = 0
 		}
 	}
 }

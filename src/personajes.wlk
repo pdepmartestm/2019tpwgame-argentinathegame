@@ -41,7 +41,8 @@ class Personaje
 				ataque.usar(self, rival)
 			}
 			else
-				game.say(self, "No tengo energia")
+				throw new Exception(message = "Energia insuficiente")
+				//game.say(self, "No tengo energia")
 	}
 	
 	method tieneEnergiaParaHacer(ataque) = self.energia()>ataque.gastoEnergia()
