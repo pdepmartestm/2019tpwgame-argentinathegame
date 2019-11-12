@@ -139,7 +139,7 @@ class AtaqueEnergia inherits Ataque
 
 object fortFuerte inherits AtaqueEnergia(
 	image = "ataques/fortFuerte.png",
-	audio = "audios/Fort_cortaste_la_luz.mpeg",
+	audio = "audios/Fort_cortaste_la_luz.mp3",
 	danio = 40,
 	gastoEnergia = 70
 ){
