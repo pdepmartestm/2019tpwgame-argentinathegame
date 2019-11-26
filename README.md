@@ -17,7 +17,7 @@ mudialmente famosos, como por ejemplo presidentes y celebridades de la farándul
   Al iniciar el juego, nos aparecera la pantalla de inicio:
 
 ![Pantalla Inicio]
-(https://raw.githubusercontent.com/martin-ezequiel/2019tpwgame-argentinathegame/master/imagenesReadmepantallaPrincipal.png)
+(https://raw.githubusercontent.com/martin-ezequiel/2019tpwgame-argentinathegame/master/imagenesReadme/pantallaPrincipal.png)
 
 
 	
